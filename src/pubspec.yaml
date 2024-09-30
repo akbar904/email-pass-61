@@ -1,21 +1,21 @@
 name: com.example.simple_cubit_app
-description: A simple Flutter application using the Cubit pattern for state management. It has a login screen and a home screen.
+description: A simple Flutter application using the Cubit pattern for state management. It has a login screen with error handling for invalid credentials and a home screen.
 version: 1.0.0
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=2.5.0"
+  flutter: ">=2.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.1
+  flutter_bloc: ^8.1.6
   equatable: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  bloc_test: ^9.1.7
+  bloc_test: ^9.1.1
   mocktail: ^0.2.0
 
 flutter:

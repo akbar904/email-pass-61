@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 	final _emailController = TextEditingController();
 	final _passwordController = TextEditingController();
+	String _errorMessage;
 
 	@override
 	void dispose() {
@@ -31,29 +32,43 @@ class _LoginScreenState extends State<LoginScreen> {
 			appBar: AppBar(
 				title: Text('Login'),
 			),
-			body: Padding(
-				padding: const EdgeInsets.all(16.0),
-				child: Column(
-					children: [
-						TextField(
-							controller: _emailController,
-							decoration: InputDecoration(
-								labelText: 'Email',
+			body: BlocListener<AuthCubit, AuthState>(
+				listener: (context, state) {
+					if (state is AuthError) {
+						setState(() {
+							_errorMessage = state.message;
+						});
+					}
+				},
+				child: Padding(
+					padding: const EdgeInsets.all(16.0),
+					child: Column(
+						children: [
+							if (_errorMessage != null)
+								Text(
+									_errorMessage,
+									style: TextStyle(color: Colors.red),
+								),
+							TextField(
+								controller: _emailController,
+								decoration: InputDecoration(
+									labelText: 'Email',
+								),
 							),
-						),
-						TextField(
-							controller: _passwordController,
-							decoration: InputDecoration(
-								labelText: 'Password',
+							TextField(
+								controller: _passwordController,
+								decoration: InputDecoration(
+									labelText: 'Password',
+								),
+								obscureText: true,
 							),
-							obscureText: true,
-						),
-						SizedBox(height: 16.0),
-						ElevatedButton(
-							onPressed: _login,
-							child: Text('Login'),
-						),
-					],
+							SizedBox(height: 16.0),
+							ElevatedButton(
+								onPressed: _login,
+								child: Text('Login'),
+							),
+						],
+					),
 				),
 			),
 		);

@@ -1,6 +1,6 @@
 {
   "package_name": "com.example.simple_cubit_app",
-  "project_description": "A simple Flutter application using the Cubit pattern for state management. It has a login screen and a home screen.",
+  "project_description": "A simple Flutter application using the Cubit pattern for state management. It has a login screen with error handling for invalid credentials and a home screen.",
   "architecture_overview": "The project uses the Cubit pattern for state management. The architecture follows a modular structure with separate folders for screens, cubits, and models. Each Dart file contains a single main class or widget.",
   "folder_structure": {
     "lib": {
@@ -38,7 +38,7 @@
     },
     {
       "name": "lib/screens/login_screen.dart",
-      "description": "Defines the LoginScreen widget which allows the user to login using email and password.",
+      "description": "Defines the LoginScreen widget which allows the user to login using email and password. Displays an error message for invalid credentials.",
       "class_diagram": "@startuml\nclass LoginScreen {\n}\n@enduml",
       "methods": [],
       "dependencies": [
@@ -60,12 +60,12 @@
     },
     {
       "name": "lib/cubits/auth_cubit.dart",
-      "description": "Defines the AuthCubit and its states. Manages the authentication state of the user.",
+      "description": "Defines the AuthCubit and its states. Manages the authentication state of the user, including handling invalid login attempts.",
       "class_diagram": "@startuml\nclass AuthCubit {\n}\n@enduml",
       "methods": [
         {
           "name": "login",
-          "description": "Logs in the user with the provided email and password.",
+          "description": "Logs in the user with the provided email and password. Updates state to AuthError on invalid credentials.",
           "parameters": [
             "String email",
             "String password"
@@ -96,7 +96,7 @@
     {
       "name": "LoginScreen",
       "type": "StatefulWidget",
-      "description": "Allows the user to login using email and password.",
+      "description": "Allows the user to login using email and password. Displays an error message for invalid credentials.",
       "file_name": "lib/screens/login_screen.dart"
     },
     {
@@ -110,11 +110,11 @@
     {
       "name": "AuthCubit",
       "state": "AuthState",
-      "description": "Manages the authentication state of the user.",
+      "description": "Manages the authentication state of the user, including handling invalid login attempts.",
       "methods": [
         {
           "name": "login",
-          "description": "Logs in the user with the provided email and password.",
+          "description": "Logs in the user with the provided email and password. Updates state to AuthError on invalid credentials.",
           "parameters": [
             "String email",
             "String password"
@@ -154,8 +154,8 @@
       "purpose": "State management using the Cubit pattern."
     }
   ],
-  "sequence_diagram": "@startuml\nactor User\nUser -> LoginScreen: Enters email and password\nLoginScreen -> AuthCubit: Calls login\nAuthCubit -> AuthState: Updates state to Authenticated\nAuthState -> HomeScreen: Navigates to HomeScreen\nUser -> HomeScreen: Clicks logout\nHomeScreen -> AuthCubit: Calls logout\nAuthCubit -> AuthState: Updates state to Unauthenticated\nAuthState -> LoginScreen: Navigates to LoginScreen\n@enduml",
-  "state_management_flow": "State is managed using the Cubit pattern. The AuthCubit manages the authentication state of the user. The LoginScreen interacts with the AuthCubit for login, and the HomeScreen interacts with it for logout. State changes are propagated through the AuthState.",
+  "sequence_diagram": "@startuml\nactor User\nUser -> LoginScreen: Enters email and password\nLoginScreen -> AuthCubit: Calls login\nAuthCubit -> AuthState: Updates state to Authenticated\nAuthState -> HomeScreen: Navigates to HomeScreen\nUser -> HomeScreen: Clicks logout\nHomeScreen -> AuthCubit: Calls logout\nAuthCubit -> AuthState: Updates state to Unauthenticated\nAuthState -> LoginScreen: Navigates to LoginScreen\nUser -> LoginScreen: Enters invalid credentials\nLoginScreen -> AuthCubit: Calls login\nAuthCubit -> AuthState: Updates state to AuthError\nAuthState -> LoginScreen: Displays error message\n@enduml",
+  "state_management_flow": "State is managed using the Cubit pattern. The AuthCubit manages the authentication state of the user. The LoginScreen interacts with the AuthCubit for login, displaying error messages for invalid credentials, and the HomeScreen interacts with it for logout. State changes are propagated through the AuthState.",
   "navigation_flow": "The app starts with the LoginScreen. Upon successful login, it navigates to the HomeScreen. On logout, it navigates back to the LoginScreen.",
   "pubspec_yaml": {
     "name": "simple_cubit_app",
